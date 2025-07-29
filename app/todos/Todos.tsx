@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../_hooks/app";
-import { removeTodo } from "../todoSlice";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Filter from "../_components/Filter";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useAppDispatch, useAppSelector } from "../_hooks/app";
+import { removeTodo } from "../todoSlice";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Todos({ filterValue }: { filterValue: string }) {
   const { todos } = useAppSelector((state) => state.todos);
@@ -29,26 +29,28 @@ export default function Todos({ filterValue }: { filterValue: string }) {
           No todos to show
         </p>
       ) : (
-        <div className="space-y-4">
-          {filteredTodos.map((todo) => (
-            <Card
-              key={todo.id}
-              className="flex items-center justify-between p-4"
-            >
-              <div>
-                <p className="font-medium">{todo.description}</p>
-                <Badge variant="secondary">Qty: {todo.quantity}</Badge>
-              </div>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => dispatch(removeTodo(todo.id))}
+        <ScrollArea className="h-[400px] pr-2">
+          <div className="space-y-4">
+            {filteredTodos.map((todo) => (
+              <Card
+                key={todo.id}
+                className="flex items-center justify-between p-4"
               >
-                Delete
-              </Button>
-            </Card>
-          ))}
-        </div>
+                <div>
+                  <p className="font-medium">{todo.description}</p>
+                  <Badge variant="secondary">Qty: {todo.quantity}</Badge>
+                </div>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => dispatch(removeTodo(todo.id))}
+                >
+                  Delete
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </ScrollArea>
       )}
 
       <div className="text-center pt-6">
