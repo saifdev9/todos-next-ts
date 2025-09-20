@@ -4,32 +4,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-react-app.git'
+                git branch: 'main', url: 'https://github.com/saifdev9/todos-next-ts'
             }
         }
-
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
-
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                bat 'npm test -- --watchAll=false'
             }
         }
-
         stage('Build') {
             steps {
-                sh 'npm run build'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Example: copy build to a server
-                sh 'scp -r build/* user@your-server:/var/www/html'
+                bat 'npm run build'
             }
         }
     }
